@@ -214,6 +214,14 @@ if ($editform->is_cancelled()) {
         $data->cron = 0;
     }
 
+    if (!isset($data->allowmailing)) {
+        $data->allowmailing = 0;
+    }
+
+    if (!isset($data->allowftpupload)) {
+        $data->allowftpupload = 0;
+    }
+
     if (empty($report)) {
         $data->ownerid = $USER->id;
         $data->courseid = $courseid;

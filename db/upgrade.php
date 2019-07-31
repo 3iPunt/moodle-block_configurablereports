@@ -96,5 +96,20 @@ function xmldb_block_configurable_reports_upgrade($oldversion) {
 
         upgrade_plugin_savepoint(true, 2019020600, 'block', 'configurable_reports');
     }
+
+    if ($oldversion < 2019073100) {
+        $table = new xmldb_table('block_configurable_reports');
+        $field = new xmldb_field('allowmailing', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'remote');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        $field = new xmldb_field('allowftpupload', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'allowmailing');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_block_savepoint(true, 2019073100, 'configurable_reports');
+    }
+
     return true;
 }

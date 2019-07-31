@@ -90,6 +90,16 @@ class report_edit_form extends moodleform {
             $mform->addElement('checkbox', 'export_'.$key, null, $val);
         }
 
+        $mform->addElement('header', 'sendingoptions', get_string('sendingoptions', 'block_configurable_reports'));
+
+        $mform->addElement('checkbox', 'allowmailing', get_string('allowmailing', 'block_configurable_reports'));
+        $mform->addHelpButton('allowmailing', 'allowmailing', 'block_configurable_reports');
+        $mform->setDefault('allowmailing', 0);
+
+        $mform->addElement('checkbox', 'allowftpupload', get_string('allowftpupload', 'block_configurable_reports'));
+        $mform->addHelpButton('allowftpupload', 'allowftpupload', 'block_configurable_reports');
+        $mform->setDefault('allowmailing', 0);
+
         if (isset($this->_customdata['report']->id) && $this->_customdata['report']->id) {
             $mform->addElement('hidden', 'id', $this->_customdata['report']->id);
             $mform->setType('id', PARAM_INT);

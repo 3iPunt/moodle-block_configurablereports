@@ -39,6 +39,12 @@ $string['configurable_reports:viewreports'] = "View reports";
 $string['exportoptions'] = "Export options";
 $string['field'] = "Field";
 
+$string['sendingoptions'] = 'Sending options';
+$string['allowmailing'] = 'Allow mailing';
+$string['allowmailing_help'] = 'Allow users to send the report to specific email addresses';
+$string['allowftpupload'] = 'Allow FTP upload';
+$string['allowftpupload_help'] = 'Allow users to upload the report to an specific FTP server';
+
 // Report form
 $string['typeofreport'] = "Type of report";
 $string['enablejsordering'] = "Enable JavaScript ordering";
@@ -406,6 +412,7 @@ $string['coursecategories'] = 'Category course filter';
 $string['filtercoursecategories'] = 'Category course filter';
 $string['filtercoursecategories_summary'] = 'Filter courses by their any parent category';
 
+$string['remotedatabase'] = 'Remote database';
 $string['dbhost'] = "DB Host";
 $string['dbhostinfo'] = "Remote Database host name (on which, we will be executing our SQL queries)";
 $string['dbname'] = "DB Name";
@@ -423,12 +430,14 @@ $string['reportsincategory'] = '2) Choose a report form the list';
 $string['remotequerysql'] = 'SQL query';
 $string['executeat'] = 'Execute at';
 $string['executeatinfo'] = 'Moodle CRON will run scheduled SQL queries after selected time. Once in 24h';
+$string['sharedrepositories'] = 'Shared repositories';
 $string['sharedsqlrepository'] = 'Shared sql repository';
 $string['sharedsqlrepositoryinfo'] = 'Name of GitHub account owner + slash + repository name';
 $string['sqlsyntaxhighlight'] = 'Highlight SQL syntax';
 $string['sqlsyntaxhighlightinfo'] = 'Highlight SQL syntax in code editor (CodeMirror JS library)';
 $string['datatables'] = 'Enable DataTables JS library';
 $string['datatablesinfo'] = 'DataTables JS library (Column sort, fixed header, search, paging...)';
+$string['userinterface'] = 'User interface';
 $string['reporttableui'] = 'Report table UI';
 $string['reporttableuiinfo'] = 'Display the report table as: Simple scrollable HTML table, jQuery with column sorting Or DataTables JS library (Column sort, fixed header, search, paging...)';
 
