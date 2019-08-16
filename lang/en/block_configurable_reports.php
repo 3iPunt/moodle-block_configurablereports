@@ -39,6 +39,7 @@ $string['configurable_reports:viewreports'] = "View reports";
 $string['exportoptions'] = "Export options";
 $string['field'] = "Field";
 
+$string['send'] = 'Send';
 $string['sendingoptions'] = 'Sending options';
 $string['allowmailing'] = 'Allow mailing';
 $string['allowmailing_help'] = 'Allow users to send the report to specific email addresses';

@@ -109,6 +109,7 @@ if ($reports) {
         get_string('username'),
         get_string('edit'),
         get_string('download', 'block_configurable_reports'),
+        get_string('send', 'block_configurable_reports'),
     ];
     $table->align = ['left', 'left', 'left', 'left', 'center', 'center'];
     $table->size = ['30%', '10%', '10%', '10%', '20%', '20%'];
@@ -171,13 +172,30 @@ if ($reports) {
             }
         }
 
+        $send = '';
+        if (!empty($r->allowmailing)) {
+            $PAGE->requires->js_call_amd('block_configurable_reports/sendemailmodal', 'init',
+                ['selector' => '.send-by-email-btn' . $r->id, 'contextid' => $PAGE->context->id, 'reportid' => $r->id]);
+            $mailsendstr = get_string('mailsendreport', 'block_configurable_reports');
+            $send .= html_writer::link('javascript:', $OUTPUT->pix_icon('t/email', $mailsendstr),
+                ['class' => 'send-by-email-btn' . $r->id]);
+        }
+        if (!empty($r->allowftpupload)) {
+            $PAGE->requires->js_call_amd('block_configurable_reports/uploadtoftpmodal', 'init',
+                ['selector' => '.send-by-ftp-btn' . $r->id, 'contextid' => $PAGE->context->id, 'reportid' => $r->id]);
+            $ftpuploadstr = get_string('ftpuploadreport', 'block_configurable_reports');
+            $send .= html_writer::link('javascript:', $OUTPUT->pix_icon('t/up', $ftpuploadstr),
+                ['class' => 'send-by-ftp-btn' . $r->id]);
+        }
+
         $table->data[] = [
             '<a href="viewreport.php?id='.$r->id.'">'.format_string($r->name).'</a>',
             $coursename,
             get_string('report_'.$r->type, 'block_configurable_reports'),
             $owner,
             $editcell,
-            $download
+            $download,
+            $send,
         ];
     }
 
