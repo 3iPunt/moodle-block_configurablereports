@@ -53,6 +53,7 @@ $string['export_csv'] = "Export in CSV format";
 $string['export_ods'] = "Export in ODS format";
 $string['export_xls'] = "Export in XLS format";
 $string['export_json'] = "Export in JSON format";
+$string['fileformat'] = 'Report file format';
 $string['viewreport'] = "View report";
 $string['norecordsfound'] = "No records found";
 $string['jsordering'] = 'JavaScript Ordering';
@@ -443,7 +444,7 @@ $string['userinterface'] = 'User interface';
 $string['reporttableui'] = 'Report table UI';
 $string['reporttableuiinfo'] = 'Display the report table as: Simple scrollable HTML table, jQuery with column sorting Or DataTables JS library (Column sort, fixed header, search, paging...)';
 
-$string['email_to'] = 'To';
+$string['email_to'] = 'To email';
 $string['email_subject'] = 'Subject';
 $string['email_message'] = 'Message';
 $string['email_send'] = 'Send';
