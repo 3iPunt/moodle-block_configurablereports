@@ -23,12 +23,7 @@ class send_email_form extends moodleform {
         $mform->setType('subject', PARAM_TEXT);
         $mform->addRule('subject', null, 'required');
 
-        $editoroptions = [
-            'trusttext' => true,
-            'subdirs' => true,
-            'maxfiles' => EDITOR_UNLIMITED_FILES,
-            'context' => $this->_customdata['context']
-        ];
+        $editoroptions = self::get_editor_options($this->_customdata['context']);
         $mform->addElement('editor', 'content', get_string('email_message', 'block_configurable_reports'), null, $editoroptions);
 
         $radioarray = [];
@@ -52,5 +47,24 @@ class send_email_form extends moodleform {
         }
 
         return $errors;
+    }
+
+    /**
+     * Get editor options for this form.
+     *
+     * @return array An array of options.
+     */
+    public static function get_editor_options($context) {
+        $editoroptions = [
+            'maxbytes' => 0,
+            'maxfiles' => 0,
+            'subdirs' => false,
+            'trusttext' => false,
+            'noclean' => false,
+            'enable_filemanagement' => false,
+            'autosave' => false,
+            'context' => $context,
+        ];
+        return $editoroptions;
     }
 }

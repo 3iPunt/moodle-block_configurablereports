@@ -520,3 +520,13 @@ $string['privacy:metadata:block_configurable_reports:components'] = 'The configu
  the filters...';
 $string['privacy:metadata:block_configurable_reports:lastexecutiontime'] = 'Time this report took to run last time it was executed,
  in milliseconds.';
+
+// FTP
+$string['ftpconnectionerror'] = 'Connection error. Unable to connect to the FTP host.';
+$string['ftploginerror'] = 'Login error. Unable to login with the provided user and password to the FTP host.';
+$string['ftpuploaderror'] = 'Upload error. An error occurred while trying to upload the report file to the FTP host.';
+$string['ftphost'] = 'Host';
+$string['ftpport'] = 'Port';
+$string['ftpuser'] = 'Username';
+$string['ftppassword'] = 'Password';
+$string['ftpremotepath'] = 'Remote file path';

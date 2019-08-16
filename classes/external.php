@@ -84,14 +84,7 @@ class external extends external_api {
         parse_str($serialiseddata, $data);
         $data = (object) $data;
 
-        $editoroptions = [
-            'maxfiles' => EDITOR_UNLIMITED_FILES,
-            'maxbytes' => FILE_AREA_MAX_BYTES_UNLIMITED,
-            'trust' => false,
-            'context' => $context,
-            'noclean' => true,
-            'subdirs' => false
-        ];
+        $editoroptions = send_email_form::get_editor_options($context);
         $data = file_prepare_standard_editor($data, 'content', $editoroptions, $context, 'block_configurable_reports',
             'send_report_email_body');
 
@@ -117,6 +110,71 @@ class external extends external_api {
      * @since Moodle 3.0
      */
     public static function send_report_by_email_returns() {
+        return new external_value(PARAM_INT, 'report id');
+    }
+
+    /**
+     * Describes the input parameters.
+     *
+     * @return external_function_parameters
+     */
+    public static function upload_report_to_ftp_parameters() {
+        return new external_function_parameters([
+            'contextid' => new external_value(PARAM_INT, 'The context id for the course'),
+            'reportid' => new external_value(PARAM_INT, 'The report id'),
+            'jsonformdata' => new external_value(PARAM_RAW, 'The data from the send email form, encoded as a json array')
+        ]);
+    }
+
+    /**
+     * Main method.
+     *
+     * @param int $contextid The context id for the course.
+     * @param int $reportid The report id.
+     * @param string $jsonformdata The data from the form, encoded as a json array.
+     * @return int new group id.
+     */
+    public static function upload_report_to_ftp($contextid, $reportid, $jsonformdata) {
+        // We always must pass webservice params through validate_parameters.
+        $params = self::validate_parameters(self::upload_report_to_ftp_parameters(), [
+            'contextid' => $contextid,
+            'reportid' => $reportid,
+            'jsonformdata' => $jsonformdata,
+        ]);
+
+        $context = context::instance_by_id($params['contextid']);
+
+        // We always must call validate_context in a webservice.
+        self::validate_context($context);
+
+        require_capability('block/configurable_reports:viewreports', $context);
+
+        $data = [];
+        $serialiseddata = json_decode($params['jsonformdata'], true);
+        parse_str($serialiseddata, $data);
+
+        $mform = new upload_to_ftp_form(null, ['context' => $context], 'post', '', null, true, $data);
+
+        $validateddata = $mform->get_data();
+        if (!$validateddata) {
+            throw new moodle_exception('errorvalidatingformdata', 'block_configurable_reports');
+        }
+
+        $uploaded = api::upload_report_to_ftp_server($reportid, $validateddata);
+        if (!$uploaded) {
+            throw new moodle_exception('ftpuploaderror', 'block_configurable_reports');
+        }
+
+        return $params['reportid'];
+    }
+
+    /**
+     * Describes the output parameters.
+     *
+     * @return external_description
+     * @since Moodle 3.0
+     */
+    public static function upload_report_to_ftp_returns() {
         return new external_value(PARAM_INT, 'report id');
     }
 }

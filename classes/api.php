@@ -11,8 +11,10 @@
 namespace block_configurable_reports;
 
 use Box\Spout\Writer\WriterFactory;
+use context_system;
 use core_php_time_limit;
 use core_user;
+use moodle_exception;
 use report_base;
 use stdClass;
 
@@ -27,14 +29,13 @@ defined('MOODLE_INTERNAL') || die();
  */
 class api {
     public static function send_report_by_email($reportid, $validateddata) {
-        // Large exports are likely to take their time and memory.
-        core_php_time_limit::raise();
-        raise_memory_limit(MEMORY_EXTRA);
+        self::raise_system_resources_limits();
 
         $recipient = $validateddata->recipient;
         $subject = $validateddata->subject;
         $messagehtml = $validateddata->content['text'];
         $messagetext = html_to_text($messagehtml);
+
         $table = self::get_report_table($reportid);
         [$tmpdir, $filename] = self::generate_report_file($table, $validateddata->fileformat);
         $attachment = $tmpdir . DIRECTORY_SEPARATOR . $filename;
@@ -139,11 +140,57 @@ class api {
     }
 
     /**
-     * @param string $attachment
-     * @param string $tmpdir
+     * @param string $filepath Complete full path of the file to be deleted.
+     * @param string $filedir Directory path of the temporary directory.
      */
-    private static function delete_generated_report_file($attachment, $tmpdir): void {
-        @unlink($attachment);
-        remove_dir($tmpdir);
+    private static function delete_generated_report_file($filepath, $filedir) {
+        @unlink($filepath);
+        remove_dir($filedir);
+    }
+
+    public static function upload_report_to_ftp_server($reportid, $validateddata) {
+        self::raise_system_resources_limits();
+
+        $host = $validateddata->ftphost;
+        $port = $validateddata->ftpport;
+        $user = $validateddata->ftpuser;
+        $password = $validateddata->ftppassword;
+        $remotepath = $validateddata->ftpremotepath;
+
+        $table = self::get_report_table($reportid);
+        [$tmpdir, $filename] = self::generate_report_file($table, $validateddata->fileformat);
+        $filepath = $tmpdir . DIRECTORY_SEPARATOR . $filename;
+        $uploaded = self::upload_file_to_ftp_server($host, $port, $user, $password, $remotepath, $filepath);
+        self::delete_generated_report_file($filepath, $tmpdir);
+
+        return $uploaded;
+    }
+
+    /**
+     * @param $host
+     * @param $port
+     * @param $user
+     * @param $password
+     * @param $remotepath
+     * @param $localpath
+     * @return bool
+     */
+    private static function upload_file_to_ftp_server($host, $port, $user, $password, $remotepath, $localpath) {
+        if (!$connection = ftp_connect($host, $port)) {
+            throw new moodle_exception('ftpconnectionerror', 'block_configurable_reports');
+        }
+        if (!$login = ftp_login($connection, $user, $password)) {
+            ftp_close($connection);
+            throw new moodle_exception('ftploginerror', 'block_configurable_reports');
+        }
+        $uploaded = ftp_put($connection, $remotepath, $localpath, FTP_BINARY);
+        ftp_close($connection);
+
+        return $uploaded;
+    }
+
+    private static function raise_system_resources_limits() {
+        core_php_time_limit::raise();
+        raise_memory_limit(MEMORY_EXTRA);
     }
 }

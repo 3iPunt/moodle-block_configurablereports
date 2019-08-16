@@ -34,4 +34,11 @@ $functions = [
         'type' => 'write',
         'ajax' => true,
     ],
+    'block_configurable_reports_upload_report_to_ftp' => [
+        'classname' => external::class,
+        'methodname' => 'upload_report_to_ftp',
+        'description' => 'Upload report to an FTP server.',
+        'type' => 'write',
+        'ajax' => true,
+    ],
 ];

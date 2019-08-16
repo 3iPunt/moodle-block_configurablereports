@@ -10,6 +10,7 @@ define([
     'jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/fragment', 'core/ajax', 'core/yui'
 ], function($, Str, ModalFactory, ModalEvents, Fragment, Ajax, Y) {
 
+    var MODAL_TITLE_STRING_KEY = 'mailsendreport';
     var COMPONENT = 'block_configurable_reports';
     var FORM_FRAGMENT_CB = 'send_email_form';
     var FORM_SUBMIT_WS_METHOD = 'block_configurable_reports_send_report_by_email';
@@ -27,7 +28,7 @@ define([
 
     FormModal.prototype.init = function(selector) {
         var triggers = $(selector);
-        return Str.get_string('mailsendreport', COMPONENT).then(function(title) {
+        return Str.get_string(MODAL_TITLE_STRING_KEY, COMPONENT).then(function(title) {
             return ModalFactory.create({
                 type: ModalFactory.types.SAVE_CANCEL,
                 title: title,
