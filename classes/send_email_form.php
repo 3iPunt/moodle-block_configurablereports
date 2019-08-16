@@ -32,6 +32,7 @@ class send_email_form extends moodleform {
         $radioarray[] = $mform->createElement('radio', 'fileformat', '', Type::ODS, Type::ODS);
         $mform->addGroup($radioarray, 'radioar', get_string('fileformat', 'block_configurable_reports'), [' '], false);
         $mform->setDefault('fileformat', Type::CSV);
+        $mform->addHelpButton('radioar', 'fileformat', 'block_configurable_reports');
 
         $mform->setDisableShortforms();
         $this->add_action_buttons(false, get_string('email_send', 'block_configurable_reports'));

@@ -18,27 +18,32 @@ class upload_to_ftp_form extends moodleform {
             $textfieldoptions);
         $mform->setType('ftphost', PARAM_TEXT);
         $mform->addRule('ftphost', null, 'required');
+        $mform->addHelpButton('ftphost', 'ftphost', 'block_configurable_reports');
 
         $mform->addElement('text', 'ftpport', get_string('ftpport', 'block_configurable_reports'),
             $textfieldoptions);
         $mform->setType('ftpport', PARAM_INT);
         $mform->addRule('ftpport', null, 'required');
         $mform->setDefault('ftpport', 21);
+        $mform->addHelpButton('ftpport', 'ftpport', 'block_configurable_reports');
 
         $mform->addElement('text', 'ftpuser', get_string('ftpuser', 'block_configurable_reports'),
             $textfieldoptions);
         $mform->setType('ftpuser', PARAM_TEXT);
         $mform->addRule('ftpuser', null, 'required');
+        $mform->addHelpButton('ftpuser', 'ftpuser', 'block_configurable_reports');
 
         $mform->addElement('password', 'ftppassword', get_string('ftppassword', 'block_configurable_reports'),
             $textfieldoptions);
         $mform->setType('ftppassword', PARAM_TEXT);
         $mform->addRule('ftppassword', null, 'required');
+        $mform->addHelpButton('ftppassword', 'ftppassword', 'block_configurable_reports');
 
         $mform->addElement('text', 'ftpremotepath', get_string('ftpremotepath', 'block_configurable_reports'),
             $textfieldoptions);
         $mform->setType('ftpremotepath', PARAM_TEXT);
         $mform->addRule('ftpremotepath', null, 'required');
+        $mform->addHelpButton('ftpremotepath', 'ftpremotepath', 'block_configurable_reports');
 
         $radioarray = [];
         $radioarray[] = $mform->createElement('radio', 'fileformat', '', Type::CSV, Type::CSV);
@@ -46,6 +51,7 @@ class upload_to_ftp_form extends moodleform {
         $radioarray[] = $mform->createElement('radio', 'fileformat', '', Type::ODS, Type::ODS);
         $mform->addGroup($radioarray, 'radioar', get_string('fileformat', 'block_configurable_reports'), [' '], false);
         $mform->setDefault('fileformat', Type::CSV);
+        $mform->addHelpButton('radioar', 'fileformat', 'block_configurable_reports');
 
         $mform->setDisableShortforms();
         $this->add_action_buttons(false, get_string('email_send', 'block_configurable_reports'));
