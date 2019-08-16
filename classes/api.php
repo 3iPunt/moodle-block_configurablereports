@@ -37,7 +37,7 @@ class api {
         $messagetext = html_to_text($messagehtml);
 
         $table = self::get_report_table($reportid);
-        [$tmpdir, $filename] = self::generate_report_file($table, $validateddata->fileformat);
+        list($tmpdir, $filename) = self::generate_report_file($table, $validateddata->fileformat);
         $attachment = $tmpdir . DIRECTORY_SEPARATOR . $filename;
         $attachname = $filename;
         $recipientuser = self::get_dummy_user_record_with_email($recipient);
@@ -158,7 +158,7 @@ class api {
         $remotepath = $validateddata->ftpremotepath;
 
         $table = self::get_report_table($reportid);
-        [$tmpdir, $filename] = self::generate_report_file($table, $validateddata->fileformat);
+        list($tmpdir, $filename) = self::generate_report_file($table, $validateddata->fileformat);
         $filepath = $tmpdir . DIRECTORY_SEPARATOR . $filename;
         $uploaded = self::upload_file_to_ftp_server($host, $port, $user, $password, $remotepath, $filepath);
         self::delete_generated_report_file($filepath, $tmpdir);
