@@ -262,6 +262,8 @@ $string['listofsqlreports'] = 'Press F11 when cursor is in the editor to toggle 
 $string['usersincoursereport_summary'] = "Any user in the current report course";
 
 $string['printreport'] = 'Print report';
+$string['mailsendreport'] = 'Email report';
+$string['ftpuploadreport'] = 'FTP upload report';
 
 $string['importreport'] = "Import report";
 $string['exportreport'] = "Export report";
@@ -441,9 +443,13 @@ $string['userinterface'] = 'User interface';
 $string['reporttableui'] = 'Report table UI';
 $string['reporttableuiinfo'] = 'Display the report table as: Simple scrollable HTML table, jQuery with column sorting Or DataTables JS library (Column sort, fixed header, search, paging...)';
 
+$string['email_to'] = 'To';
 $string['email_subject'] = 'Subject';
 $string['email_message'] = 'Message';
 $string['email_send'] = 'Send';
+
+$string['erroremailreport'] = 'Error sending report via email';
+$string['errorvalidatingformdata'] = 'Error validating form data';
 
 $string['sqlsecurity'] = 'SQL Security';
 $string['sqlsecurityinfo'] = 'Disable for executing SQL queries with statements for inserting data';

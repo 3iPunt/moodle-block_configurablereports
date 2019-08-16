@@ -15,24 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
- *
- * Configurable Reports - A Moodle block for creating customizable reports
+ * Web service for Recently accessed items block
  *
  * @package     block_configurable_reports
- * @author:     Juan leyva <http://www.twitter.com/jleyvadelgado>
- * @date:       2013-09-07
- *
- * @copyright  Juan leyva <http://www.twitter.com/jleyvadelgado>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright   2019 Mitxel Moriana @ 3iPunt Moodle Partner <mitxel@tresipunt.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+use block_configurable_reports\external;
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2019080500;  // Plugin version.
-$plugin->requires = 2015111600; // require Moodle version (3.0).
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '3.7.0';
-$plugin->component = 'block_configurable_reports'; // Full name of the plugin (used for diagnostics)
-$plugin->cron      = 86400; // = Once in 24h, Set min time between cron executions.
-                            // Should probably be at night to off load CPU load.
+$functions = [
+    'block_configurable_reports_send_report_by_email' => [
+        'classname' => external::class,
+        'methodname' => 'send_report_by_email',
+        'description' => 'Send a given report via email.',
+        'type' => 'write',
+        'ajax' => true,
+    ],
+];

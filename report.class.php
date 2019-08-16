@@ -780,6 +780,24 @@ class report_base {
         echo '<div class="centerpara"><br />';
         echo $OUTPUT->pix_icon('print', get_string('printreport', 'block_configurable_reports'), 'block_configurable_reports');
         echo "&nbsp;<a href=\"javascript: printDiv('printablediv')\">".get_string('printreport', 'block_configurable_reports')."</a>";
+        // Send report via email.
+        if (!empty($this->config->allowmailing)) {
+            $moodlepage->requires->js_call_amd('block_configurable_reports/sendemailmodal', 'init',
+                ['selector' => '.send-by-email-btn', 'contextid' => $moodlepage->context->id, 'reportid' => $this->config->id]);
+            $mailsendstr = get_string('mailsendreport', 'block_configurable_reports');
+            echo html_writer::empty_tag('br');
+            echo $OUTPUT->pix_icon('t/email', $mailsendstr);
+            echo html_writer::link('javascript:', $mailsendstr, ['class' => 'send-by-email-btn']);
+        }
+        // Upload report to FTP server.
+        if (!empty($this->config->allowftpupload)) {
+            $moodlepage->requires->js_call_amd('block_configurable_reports/uploadtoftpmodal', 'init',
+                ['selector' => '.send-by-ftp-btn', 'contextid' => $moodlepage->context->id, 'reportid' => $this->config->id]);
+            echo html_writer::empty_tag('br');
+            $ftpuploadstr = get_string('ftpuploadreport', 'block_configurable_reports');
+            echo $OUTPUT->pix_icon('t/up', $ftpuploadstr);
+            echo html_writer::link('javascript:', $ftpuploadstr, ['class' => 'send-by-ftp-btn']);
+        }
         echo "</div>\n";
     }
 
@@ -788,5 +806,3 @@ class report_base {
         return join('', array_reverse($ar[0]));
     }
 }
-
-
