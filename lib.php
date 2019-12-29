@@ -24,7 +24,9 @@ function block_configurable_reports_output_fragment_send_email_form( $args ) {
 	$formdata = [];
 	if ( ! empty( $args->jsonformdata ) ) {
 		$serialiseddata = json_decode( $args->jsonformdata, true );
-		parse_str( $serialiseddata, $formdata );
+		if ( count( $serialiseddata ) > 0 ) {
+			parse_str( $serialiseddata, $formdata );
+		}
 	}
 	$formdata = (object) $formdata;
 
